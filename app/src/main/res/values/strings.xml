@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">bluPresence</string>
+    <string name="menu_instituicao">Instituição</string>
+    <string name="menu_turmas">Turmas</string>
+    <string name="menu_chamadas">Realizar Chamada</string>
 </resources>

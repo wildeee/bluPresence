@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".InstituicaoListActivity"></activity>
+        <activity android:name=".InstituicaoListActivity"/>
+        <activity android:name=".InstituicaoFormActivity"/>
 
     </application>
 

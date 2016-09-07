@@ -4,4 +4,7 @@
     <string name="menu_turmas">Turmas</string>
     <string name="menu_chamadas">Realizar Chamada</string>
     <string name="nova_instituicao">Nova Instituição</string>
+    <string name="instituicao">Instituição</string>
+    <string name="url">URL</string>
+    <string name="testar_conexao">Testar Conexão</string>
 </resources>

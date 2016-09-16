@@ -7,4 +7,5 @@
     <string name="instituicao">Instituição</string>
     <string name="url">URL</string>
     <string name="testar_conexao">Testar Conexão</string>
+    <string name="carregando">Carregando...</string>
 </resources>

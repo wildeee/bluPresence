@@ -48,5 +48,9 @@
         android:text="@string/testar_conexao"
         android:id="@+id/btnTesteConexao"
         android:layout_below="@+id/txtUrl"
-        android:layout_alignEnd="@+id/txtUrl" />
+        android:layout_alignEnd="@+id/txtUrl"
+        android:onClick="onClickTestarConexao"/>
+
+
+
 </RelativeLayout>

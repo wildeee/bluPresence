@@ -8,4 +8,7 @@
     <string name="url">URL</string>
     <string name="testar_conexao">Testar Conexão</string>
     <string name="carregando">Carregando...</string>
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="autenticar">Autenticar</string>
 </resources>

@@ -7,9 +7,9 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.wilderossi.blupresence.vo.ApiVO;
 
-public abstract class BaseApi<T extends ApiVO> extends AsyncTask<Void, Void, T> implements ApiInterface {
+public abstract class BaseApi<T> extends AsyncTask<Void, Void, T> implements ApiInterface {
 
-    private final String baseUrl;
+    protected final String baseUrl;
     protected final RestTemplate rest;
 
     public BaseApi(String baseUrl){

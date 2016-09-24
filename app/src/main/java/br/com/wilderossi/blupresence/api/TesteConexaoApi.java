@@ -9,7 +9,7 @@ public class TesteConexaoApi extends BaseApi<TesteConexaoVO> {
 
     private static final String RELATIVE_URL = "/testConnection";
 
-    public TesteConexaoApi(String baseUrl, LoaderDialog loader) {
+    public TesteConexaoApi(String baseUrl) {
         super(baseUrl);
     }
 

@@ -51,6 +51,6 @@ public class Instituicao {
 
     @Override
     public String toString() {
-        return this.id + " - " + this.nome+ " : " + this.idProfessor + " (" + this.url + ")";
+        return this.nome;
     }
 }

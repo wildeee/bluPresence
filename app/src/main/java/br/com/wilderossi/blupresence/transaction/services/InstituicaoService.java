@@ -55,7 +55,7 @@ public class InstituicaoService {
     public List<Instituicao> buscar(){
         Cursor dados;
         List<Instituicao> instituicoes = new ArrayList<>();
-        String[] campos =  {CriaBanco.ID, CriaBanco.NOME, CriaBanco.URL};
+        String[] campos =  {CriaBanco.ID, CriaBanco.NOME, CriaBanco.URL, CriaBanco.ID_PROFESSOR};
 
         db = banco.getReadableDatabase();
         dados = db.query(banco.TABELA, campos, null, null, null, null, null, null);

@@ -1,11 +1,8 @@
 package br.com.wilderossi.blupresence;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
-import java.util.List;
 
 import br.com.wilderossi.blupresence.api.AuthenticationApi;
 import br.com.wilderossi.blupresence.api.ProfessorVO;
@@ -17,12 +14,12 @@ import br.com.wilderossi.blupresence.vo.LoginVO;
 
 public class AuthenticationFormActivity extends BaseActivity {
 
-    private InstituicaoService alunoService;
+    private InstituicaoService instituicaoService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        alunoService = new InstituicaoService(getBaseContext());
+        instituicaoService = new InstituicaoService(getBaseContext());
     }
 
     @Override
@@ -51,7 +48,7 @@ public class AuthenticationFormActivity extends BaseActivity {
                 instituicao.setUrl(extras.getString(InstituicaoFormActivity.PARAM_URL_INSTITUICAO));
                 instituicao.setIdProfessor(prof.getId());
 
-                alunoService.salvar(instituicao);
+                instituicaoService.salvar(instituicao);
                 AuthenticationFormActivity.this.finish();
             }
         };

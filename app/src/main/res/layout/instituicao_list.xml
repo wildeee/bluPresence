@@ -10,21 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.wilderossi.blupresence.InstituicaoListActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="wrap_content"
+        android:text="@string/nova_instituicao"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickNovaInstituicao"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nova_instituicao"
-            android:id="@+id/button"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onClickNovaInstituicao"/>
-
-    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listagemInstituicoes"
+        android:layout_below="@+id/button"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

@@ -6,9 +6,8 @@ import android.widget.EditText;
 
 import br.com.wilderossi.blupresence.api.AuthenticationApi;
 import br.com.wilderossi.blupresence.api.ProfessorVO;
-import br.com.wilderossi.blupresence.api.StubUtils;
 import br.com.wilderossi.blupresence.components.LoaderDialog;
-import br.com.wilderossi.blupresence.components.SingletonHelper;
+import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Instituicao;
 import br.com.wilderossi.blupresence.transaction.services.InstituicaoService;
 import br.com.wilderossi.blupresence.vo.LoginVO;

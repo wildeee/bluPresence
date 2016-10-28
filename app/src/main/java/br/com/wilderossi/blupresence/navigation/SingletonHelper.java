@@ -1,4 +1,4 @@
-package br.com.wilderossi.blupresence.components;
+package br.com.wilderossi.blupresence.navigation;
 
 import br.com.wilderossi.blupresence.InstituicaoListActivity;
 

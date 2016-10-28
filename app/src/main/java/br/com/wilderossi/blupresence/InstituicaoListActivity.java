@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import br.com.wilderossi.blupresence.components.SingletonHelper;
+import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.services.InstituicaoService;
 
 public class InstituicaoListActivity extends BaseActivity {

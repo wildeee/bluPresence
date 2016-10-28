@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import br.com.wilderossi.blupresence.components.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.services.InstituicaoService;
 
 public class InstituicaoListActivity extends BaseActivity {
@@ -23,7 +24,7 @@ public class InstituicaoListActivity extends BaseActivity {
         carregaInstituicoes();
     }
 
-    private void carregaInstituicoes(){
+    public void carregaInstituicoes(){
         ListView listagem = (ListView) findViewById(R.id.listagemInstituicoes);
         assert listagem != null;
         listagem.setAdapter(
@@ -37,5 +38,6 @@ public class InstituicaoListActivity extends BaseActivity {
 
     public void onClickNovaInstituicao(View view){
         redirectTo(InstituicaoFormActivity.class);
+        SingletonHelper.instituicaoListActivity = this;
     }
 }

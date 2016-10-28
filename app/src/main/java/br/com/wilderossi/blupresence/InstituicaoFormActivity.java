@@ -1,11 +1,15 @@
 package br.com.wilderossi.blupresence;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
 import br.com.wilderossi.blupresence.api.TesteConexaoApi;
 import br.com.wilderossi.blupresence.components.LoaderDialog;
+import br.com.wilderossi.blupresence.transaction.Instituicao;
+import br.com.wilderossi.blupresence.util.DateUtils;
 import br.com.wilderossi.blupresence.vo.TesteConexaoVO;
 
 public class InstituicaoFormActivity extends BaseActivity {
@@ -36,6 +40,15 @@ public class InstituicaoFormActivity extends BaseActivity {
             protected void onPostExecute(TesteConexaoVO testeConexaoVO) {
                 super.onPostExecute(testeConexaoVO);
                 loader.cancel();
+                if (testeConexaoVO == null){
+                    Context context = InstituicaoFormActivity.this;
+                    AlertDialog.Builder urlInvalidaDialog = new AlertDialog.Builder(context);
+                    urlInvalidaDialog.setPositiveButton(context.getString(R.string.OK), null);
+                    urlInvalidaDialog.setTitle(context.getString(R.string.invalidUrl));
+                    urlInvalidaDialog.setMessage(context.getString(R.string.invalidUrlMessage));
+                    urlInvalidaDialog.show();
+                    return;
+                }
                 InstituicaoFormActivity.this.redirectTo(AuthenticationFormActivity.class);
                 InstituicaoFormActivity.this.finish();
             }

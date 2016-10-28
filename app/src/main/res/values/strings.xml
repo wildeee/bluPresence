@@ -11,4 +11,10 @@
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="autenticar">Autenticar</string>
+    <string name="invalidUrl">URL inválida</string>
+    <string name="invalidUrlMessage">A URL digitada é inválida</string>
+    <string name="OK">OK</string>
+    <string name="sucesso">Sucesso!</string>
+    <string name="sucessoMensagemPrefixo">Sucesso! Mensagem do servidor: </string>
+    <string name="sucessoMensagemSufixo">\nRecebido às </string>
 </resources>

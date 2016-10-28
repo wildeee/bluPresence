@@ -8,6 +8,7 @@ import br.com.wilderossi.blupresence.api.AuthenticationApi;
 import br.com.wilderossi.blupresence.api.ProfessorVO;
 import br.com.wilderossi.blupresence.api.StubUtils;
 import br.com.wilderossi.blupresence.components.LoaderDialog;
+import br.com.wilderossi.blupresence.components.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Instituicao;
 import br.com.wilderossi.blupresence.transaction.services.InstituicaoService;
 import br.com.wilderossi.blupresence.vo.LoginVO;
@@ -38,7 +39,7 @@ public class AuthenticationFormActivity extends BaseActivity {
         login.setLogin(loginTextView.getText().toString());
         login.setSenha(senhaTextView.getText().toString());
 
-        AuthenticationApi service = new AuthenticationApi(StubUtils.BASE_URL, login){
+        AuthenticationApi service = new AuthenticationApi(getIntent().getExtras().getString(InstituicaoFormActivity.PARAM_URL_INSTITUICAO), login){
             @Override
             protected void onPostExecute(ProfessorVO prof) {
                 loader.cancel();
@@ -50,6 +51,7 @@ public class AuthenticationFormActivity extends BaseActivity {
 
                 instituicaoService.salvar(instituicao);
                 AuthenticationFormActivity.this.finish();
+                SingletonHelper.instituicaoListActivity.carregaInstituicoes();
             }
         };
 

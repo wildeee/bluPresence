@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="@string/menu_turmas"
             android:id="@+id/button2"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClickTurma"/>
 
         <Button
             android:layout_width="match_parent"

@@ -17,9 +17,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".InstituicaoListActivity"    />
-        <activity android:name=".InstituicaoFormActivity"    />
-        <activity android:name=".AuthenticationFormActivity" />
+        <activity android:name=".InstituicaoListActivity"      />
+        <activity android:name=".InstituicaoFormActivity"      />
+        <activity android:name=".AuthenticationFormActivity"   />
+        <activity android:name=".TurmaInstituicaoListActivity" />
 
     </application>
 

@@ -30,6 +30,7 @@ public class InstituicaoService {
 
         valores.put(CriaBanco.NOME, instituicao.getNome());
         valores.put(CriaBanco.URL, instituicao.getUrl());
+        valores.put(CriaBanco.ID_PROFESSOR, instituicao.getIdProfessor());
 
 
 

@@ -9,6 +9,7 @@ import br.com.wilderossi.blupresence.transaction.services.InstituicaoService;
 public abstract class InstituicaoListBaseActivity extends BaseActivity {
 
     private InstituicaoService instituicaoService;
+    protected ListView listagem;
 
     protected abstract ListView getListagem();
 
@@ -16,11 +17,11 @@ public abstract class InstituicaoListBaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instituicaoService = new InstituicaoService(getBaseContext());
+        listagem = getListagem();
         carregaInstituicoes();
     }
 
     public void carregaInstituicoes(){
-        ListView listagem = getListagem();
         assert listagem != null;
         listagem.setAdapter(
                 new ArrayAdapter<>(

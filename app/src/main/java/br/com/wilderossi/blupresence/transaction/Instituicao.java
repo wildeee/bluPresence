@@ -11,6 +11,7 @@ public class Instituicao {
         this.id = id;
         this.nome = nome;
         this.url = cidade;
+        this.idProfessor = idProfessor;
     }
 
     public Instituicao(){

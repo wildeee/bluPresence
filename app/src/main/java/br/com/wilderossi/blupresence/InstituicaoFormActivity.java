@@ -28,7 +28,7 @@ public class InstituicaoFormActivity extends BaseActivity {
         EditText urlField = (EditText) findViewById(R.id.txtUrl);
         intent.putExtra(PARAM_NOME_INSTITUICAO, instituicaoField.getText().toString());
         intent.putExtra(PARAM_URL_INSTITUICAO, urlField.getText().toString());
-        return intent;
+        return super.setParameters(intent);
     }
 
     public void onClickTestarConexao(View view){

@@ -19,5 +19,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Creatabl
         setContentView(getActivity());
     }
 
+    protected String getStringExtra(Bundle savedInstanceState, String id) {
+        String returnData;
+        returnData = (savedInstanceState == null) ? null : (String) savedInstanceState
+                .getSerializable(id);
+        if (returnData == null) {
+            Bundle extras = getIntent().getExtras();
+            returnData = extras != null ? extras.getString(id) : null;
+        }
+        return returnData;
+    }
+
 
 }

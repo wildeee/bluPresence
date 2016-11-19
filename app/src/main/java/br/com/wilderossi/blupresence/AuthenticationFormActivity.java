@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import br.com.wilderossi.blupresence.api.AuthenticationApi;
-import br.com.wilderossi.blupresence.api.ProfessorVO;
+import br.com.wilderossi.blupresence.vo.ProfessorVO;
 import br.com.wilderossi.blupresence.components.LoaderDialog;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Instituicao;

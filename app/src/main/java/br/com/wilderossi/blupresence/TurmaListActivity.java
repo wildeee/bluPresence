@@ -10,7 +10,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import br.com.wilderossi.blupresence.api.TurmaApi;
-import br.com.wilderossi.blupresence.api.TurmaVO;
+import br.com.wilderossi.blupresence.vo.TurmaVO;
 import br.com.wilderossi.blupresence.components.LoaderDialog;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 

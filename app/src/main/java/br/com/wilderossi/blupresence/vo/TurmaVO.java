@@ -1,4 +1,4 @@
-package br.com.wilderossi.blupresence.api;
+package br.com.wilderossi.blupresence.vo;
 
 import java.util.List;
 

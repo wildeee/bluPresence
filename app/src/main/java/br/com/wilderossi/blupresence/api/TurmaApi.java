@@ -5,6 +5,8 @@ import android.util.Log;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.wilderossi.blupresence.vo.TurmaVO;
+
 public class TurmaApi extends BaseApi<List<TurmaVO>> {
 
     private static final String URL_FORMAT = "%s/%s";

@@ -1,6 +1,7 @@
 package br.com.wilderossi.blupresence.api;
 
 import br.com.wilderossi.blupresence.vo.LoginVO;
+import br.com.wilderossi.blupresence.vo.ProfessorVO;
 
 public class AuthenticationApi extends BaseApi<ProfessorVO> {
 

@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.wilderossi.blupresence.api.AlunoVO;
+import br.com.wilderossi.blupresence.vo.AlunoVO;
 import br.com.wilderossi.blupresence.api.AlunosApi;
-import br.com.wilderossi.blupresence.api.TurmaVO;
+import br.com.wilderossi.blupresence.vo.TurmaVO;
 import br.com.wilderossi.blupresence.components.LoaderDialog;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 

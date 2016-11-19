@@ -1,7 +1,7 @@
 package br.com.wilderossi.blupresence.navigation;
 
 import br.com.wilderossi.blupresence.InstituicaoListActivity;
-import br.com.wilderossi.blupresence.api.TurmaVO;
+import br.com.wilderossi.blupresence.vo.TurmaVO;
 
 public class SingletonHelper {
 

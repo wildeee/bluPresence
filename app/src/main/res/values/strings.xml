@@ -17,4 +17,6 @@
     <string name="sucesso">Sucesso!</string>
     <string name="sucessoMensagemPrefixo">Sucesso! Mensagem do servidor: </string>
     <string name="sucessoMensagemSufixo">\nRecebido às </string>
+    <string name="turma">Turma</string>
+    <string name="salvar">Salvar</string>
 </resources>

@@ -22,6 +22,7 @@
         <activity android:name=".AuthenticationFormActivity"   />
         <activity android:name=".TurmaInstituicaoListActivity" />
         <activity android:name=".TurmaListActivity" />
+        <activity android:name=".TurmaFormActivity" />
 
     </application>
 

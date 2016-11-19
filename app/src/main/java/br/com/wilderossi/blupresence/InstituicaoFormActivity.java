@@ -34,7 +34,6 @@ public class InstituicaoFormActivity extends BaseActivity {
     public void onClickTestarConexao(View view){
         final LoaderDialog loader = new LoaderDialog(this);
         EditText urlField = (EditText) findViewById(R.id.txtUrl);
-//        TesteConexaoApi service = new TesteConexaoApi(StubUtils.BASE_URL){
         TesteConexaoApi service = new TesteConexaoApi(urlField.getText().toString()){
             @Override
             protected void onPostExecute(TesteConexaoVO testeConexaoVO) {

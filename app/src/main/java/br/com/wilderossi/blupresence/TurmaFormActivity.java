@@ -1,6 +1,8 @@
 package br.com.wilderossi.blupresence;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -8,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.wilderossi.blupresence.transaction.Turma;
+import br.com.wilderossi.blupresence.transaction.services.TurmaService;
 import br.com.wilderossi.blupresence.vo.AlunoVO;
 import br.com.wilderossi.blupresence.api.AlunosApi;
 import br.com.wilderossi.blupresence.vo.TurmaVO;
@@ -16,8 +20,11 @@ import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 
 public class TurmaFormActivity extends BaseActivity {
 
+    private Long idInstituicao;
     private TurmaVO turmaVo;
     private List<AlunoVO> alunos;
+
+    private TurmaService turmaSqliteService;
 
     @Override
     public int getActivity() {
@@ -28,6 +35,7 @@ public class TurmaFormActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        turmaSqliteService = new TurmaService(getBaseContext());
         this.turmaVo = SingletonHelper.turmaVO;
         TextView txtTurmaDisabled = (TextView) findViewById(R.id.txtTurmaDisabled);
         txtTurmaDisabled.setText(turmaVo.getDescricao());
@@ -39,6 +47,7 @@ public class TurmaFormActivity extends BaseActivity {
         }
 
         String baseUrl = super.getStringExtra(savedInstanceState, TurmaListActivity.PARAM_URL_INSTITUICAO);
+        idInstituicao = Long.valueOf(getIntExtra(savedInstanceState, TurmaListActivity.PARAM_ID_INSTITUICAO));
         inicializaListagemAlunos(baseUrl);
     }
 
@@ -69,5 +78,18 @@ public class TurmaFormActivity extends BaseActivity {
 
         loader.show();
         service.execute();
+    }
+
+    public void onClickNovaTurma(View view){
+        Turma turma = new Turma();
+        turma.setInstituicaoId(idInstituicao);
+        turma.setServerId(turmaVo.getId());
+        turma.setDescricao(turmaVo.getDescricao());
+
+        turmaSqliteService.salvar(turma);
+        List<Turma> turmas = turmaSqliteService.buscar();
+        for (Turma t : turmas){
+            Log.v("TURMA: ", t.getDescricao());
+        }
     }
 }

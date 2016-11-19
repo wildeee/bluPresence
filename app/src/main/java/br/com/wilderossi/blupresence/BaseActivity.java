@@ -30,5 +30,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Creatabl
         return returnData;
     }
 
+    protected Integer getIntExtra(Bundle savedInstanceState, String id) {
+        Integer returnData;
+        returnData = (savedInstanceState == null) ? null : (Integer) savedInstanceState
+                .getSerializable(id);
+        if (returnData == null) {
+            Bundle extras = getIntent().getExtras();
+            returnData = extras != null ? extras.getInt(id) : null;
+        }
+        return returnData;
+    }
+
 
 }

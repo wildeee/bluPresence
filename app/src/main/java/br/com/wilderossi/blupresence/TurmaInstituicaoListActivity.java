@@ -12,6 +12,7 @@ public class TurmaInstituicaoListActivity extends InstituicaoListBaseActivity im
 
     public static final String PARAM_URL_INSTITUICAO         = "instituicaoUrl";
     public static final String PARAM_IDPROFESSOR_INSTITUICAO = "idProfessor";
+    public static final String PARAM_ID_INSTITUICAO          = "idInstituicao";
     private Instituicao instituicao;
 
     @Override
@@ -34,6 +35,7 @@ public class TurmaInstituicaoListActivity extends InstituicaoListBaseActivity im
     protected Intent setParameters(Intent intent) {
         intent.putExtra(PARAM_URL_INSTITUICAO, instituicao.getUrl());
         intent.putExtra(PARAM_IDPROFESSOR_INSTITUICAO, instituicao.getIdProfessor());
+        intent.putExtra(PARAM_ID_INSTITUICAO, instituicao.getId());
         return super.setParameters(intent);
     }
 

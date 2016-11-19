@@ -28,8 +28,10 @@ public class CriaBanco extends SQLiteOpenHelper {
                 + NOME + " text, "
                 + URL + " text, "
                 + ID_PROFESSOR + " text"
-                + ")";
+                + ");";
+
         db.execSQL(sql);
+        new TabelaTurma().onCreate(db);
     }
 
     @Override

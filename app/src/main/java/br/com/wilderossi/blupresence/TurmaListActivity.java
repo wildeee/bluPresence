@@ -17,8 +17,10 @@ import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 public class TurmaListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     public static final String PARAM_URL_INSTITUICAO = "PARAM_URL";
+    public static final String PARAM_ID_INSTITUICAO  = "idInstituicao";
     private ListView listagem;
     private String baseUrl;
+    private Long idInstituicao;
 
     @Override
     public int getActivity() {
@@ -31,6 +33,7 @@ public class TurmaListActivity extends BaseActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         baseUrl = getStringExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_URL_INSTITUICAO);
         String idProfessor = getStringExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_IDPROFESSOR_INSTITUICAO);
+        idInstituicao = Long.valueOf(getIntExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_ID_INSTITUICAO));
         listagem = (ListView) findViewById(R.id.listagemTurma);
         TurmaApi service = new TurmaApi(baseUrl, idProfessor){
             @Override
@@ -54,6 +57,7 @@ public class TurmaListActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     protected Intent setParameters(Intent intent) {
         intent.putExtra(PARAM_URL_INSTITUICAO, baseUrl);
+        intent.putExtra(PARAM_ID_INSTITUICAO, idInstituicao.intValue());
         return super.setParameters(intent);
     }
 

@@ -40,6 +40,7 @@
         android:id="@+id/btnSalvarTurma"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/listViewTurmasForm" />
+        android:layout_alignEnd="@+id/listViewTurmasForm"
+        android:onClick="onClickNovaTurma"/>
 
 </RelativeLayout>

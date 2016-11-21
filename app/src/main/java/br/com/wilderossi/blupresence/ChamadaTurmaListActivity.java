@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import br.com.wilderossi.blupresence.components.TurmaInstituicaoVOAdapter;
 import br.com.wilderossi.blupresence.transaction.services.TurmaService;
 import br.com.wilderossi.blupresence.vo.TurmaInstituicaoVO;
 
@@ -27,5 +28,11 @@ public class ChamadaTurmaListActivity extends BaseActivity{
         List<TurmaInstituicaoVO> turmasInstituicaoVO = service.buscarTurmasInstituicao();
 
         listView = (ListView) findViewById(R.id.listViewChamadaTurma);
+
+        listView.setAdapter(new TurmaInstituicaoVOAdapter(
+                this,
+                R.layout.turma_instituicao_listadapter_layout,
+                turmasInstituicaoVO
+        ));
     }
 }

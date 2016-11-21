@@ -8,14 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class CriaBanco extends SQLiteOpenHelper {
 
     public static final String NOME_BANCO = "banco.db";
-    public static final String TABELA = "instituicoes";
-    public static final String ID = "id";
-    public static final String NOME = "nome";
-    public static final String URL = "url";
-    public static final String ID_PROFESSOR = "idprofessor";
-
     private static final int VERSAO = 1;
 
+    private static final TableCreator[] tabelas = {
+            new TabelaInstituicao(),
+            new TabelaTurma(),
+            new TabelaAluno()
+    };
 
     public CriaBanco(Context context) {
         super(context, NOME_BANCO, null, VERSAO);
@@ -23,20 +22,15 @@ public class CriaBanco extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " + TABELA + "("
-                + ID + " integer primary key autoincrement, "
-                + NOME + " text, "
-                + URL + " text, "
-                + ID_PROFESSOR + " text"
-                + ");";
-
-        db.execSQL(sql);
-        new TabelaTurma().onCreate(db);
+        for (TableCreator tabela : tabelas){
+            tabela.onCreate(db);
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABELA);
-        onCreate(db);
+        for (TableCreator tabela : tabelas){
+            tabela.onUpgrade(db, oldVersion, newVersion);
+        }
     }
 }

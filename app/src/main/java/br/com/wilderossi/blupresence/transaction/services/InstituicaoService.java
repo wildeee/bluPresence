@@ -11,6 +11,7 @@ import java.util.List;
 
 import br.com.wilderossi.blupresence.transaction.Instituicao;
 import br.com.wilderossi.blupresence.transaction.database.CriaBanco;
+import br.com.wilderossi.blupresence.transaction.database.TabelaInstituicao;
 
 public class InstituicaoService {
 
@@ -28,17 +29,17 @@ public class InstituicaoService {
         db = banco.getWritableDatabase();
         valores = new ContentValues();
 
-        valores.put(CriaBanco.NOME, instituicao.getNome());
-        valores.put(CriaBanco.URL, instituicao.getUrl());
-        valores.put(CriaBanco.ID_PROFESSOR, instituicao.getIdProfessor());
+        valores.put(TabelaInstituicao.NOME, instituicao.getNome());
+        valores.put(TabelaInstituicao.URL, instituicao.getUrl());
+        valores.put(TabelaInstituicao.ID_PROFESSOR, instituicao.getIdProfessor());
 
 
 
         if (instituicao.getId() != null && instituicao.getId() != 0){
-            String where = CriaBanco.ID + " = " + instituicao.getId();
-            resultado = db.update(CriaBanco.TABELA, valores, where, null);
+            String where = TabelaInstituicao.ID + " = " + instituicao.getId();
+            resultado = db.update(TabelaInstituicao.TABELA, valores, where, null);
         } else {
-            resultado = db.insert(CriaBanco.TABELA, null, valores);
+            resultado = db.insert(TabelaInstituicao.TABELA, null, valores);
         }
 
         db.close();
@@ -46,9 +47,9 @@ public class InstituicaoService {
     }
 
     public boolean remover(Integer id){
-        String where = CriaBanco.ID + " = " + id;
+        String where = TabelaInstituicao.ID + " = " + id;
         db = banco.getReadableDatabase();
-        int resultado = db.delete(CriaBanco.TABELA, where, null);
+        int resultado = db.delete(TabelaInstituicao.TABELA, where, null);
         db.close();
         return resultado != -1;
     }
@@ -56,10 +57,10 @@ public class InstituicaoService {
     public List<Instituicao> buscar(){
         Cursor dados;
         List<Instituicao> instituicoes = new ArrayList<>();
-        String[] campos =  {CriaBanco.ID, CriaBanco.NOME, CriaBanco.URL, CriaBanco.ID_PROFESSOR};
+        String[] campos =  {TabelaInstituicao.ID, TabelaInstituicao.NOME, TabelaInstituicao.URL, TabelaInstituicao.ID_PROFESSOR};
 
         db = banco.getReadableDatabase();
-        dados = db.query(banco.TABELA, campos, null, null, null, null, null, null);
+        dados = db.query(TabelaInstituicao.TABELA, campos, null, null, null, null, null, null);
 
         if(dados != null && dados.moveToFirst()){
             do {

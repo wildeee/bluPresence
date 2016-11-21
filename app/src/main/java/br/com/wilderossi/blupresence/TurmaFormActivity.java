@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.wilderossi.blupresence.transaction.Aluno;
 import br.com.wilderossi.blupresence.transaction.Turma;
+import br.com.wilderossi.blupresence.transaction.services.AlunoService;
+import br.com.wilderossi.blupresence.transaction.services.DatabaseServiceException;
 import br.com.wilderossi.blupresence.transaction.services.TurmaService;
 import br.com.wilderossi.blupresence.vo.AlunoVO;
 import br.com.wilderossi.blupresence.api.AlunosApi;
@@ -25,6 +28,7 @@ public class TurmaFormActivity extends BaseActivity {
     private List<AlunoVO> alunos;
 
     private TurmaService turmaSqliteService;
+    private AlunoService alunoSqliteService;
 
     @Override
     public int getActivity() {
@@ -36,6 +40,7 @@ public class TurmaFormActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         turmaSqliteService = new TurmaService(getBaseContext());
+        alunoSqliteService = new AlunoService(getBaseContext());
         this.turmaVo = SingletonHelper.turmaVO;
         TextView txtTurmaDisabled = (TextView) findViewById(R.id.txtTurmaDisabled);
         txtTurmaDisabled.setText(turmaVo.getDescricao());
@@ -80,16 +85,21 @@ public class TurmaFormActivity extends BaseActivity {
         service.execute();
     }
 
-    public void onClickNovaTurma(View view){
+    public void onClickNovaTurma(View view) throws DatabaseServiceException {
         Turma turma = new Turma();
         turma.setInstituicaoId(idInstituicao);
         turma.setServerId(turmaVo.getId());
         turma.setDescricao(turmaVo.getDescricao());
 
-        turmaSqliteService.salvar(turma);
-        List<Turma> turmas = turmaSqliteService.buscar();
-        for (Turma t : turmas){
-            Log.v("TURMA: ", t.getDescricao());
+        Long idTurma = turmaSqliteService.salvar(turma);
+
+        for (AlunoVO alunoVO : alunos){
+            Aluno aluno = new Aluno();
+            aluno.setNome(alunoVO.getNome());
+            aluno.setServerId(alunoVO.getId());
+            aluno.setTurmaId(idTurma);
+
+            alunoSqliteService.salvar(aluno);
         }
     }
 }

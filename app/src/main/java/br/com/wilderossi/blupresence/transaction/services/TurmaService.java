@@ -20,7 +20,7 @@ public class TurmaService {
         banco = new CriaBanco(context);
     }
 
-    public boolean salvar(Turma turma) {
+    public Long salvar(Turma turma) throws DatabaseServiceException {
         ContentValues valores;
         long resultado = -1;
 
@@ -41,7 +41,11 @@ public class TurmaService {
         }
 
         db.close();
-        return resultado != -1;
+
+        if (resultado == -1){
+            throw new DatabaseServiceException("Não foi possível salvar.");
+        }
+        return resultado;
     }
 
     public boolean remover(Integer id){

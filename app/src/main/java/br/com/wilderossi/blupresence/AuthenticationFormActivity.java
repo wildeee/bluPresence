@@ -1,8 +1,10 @@
 package br.com.wilderossi.blupresence;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import br.com.wilderossi.blupresence.api.AuthenticationApi;
 import br.com.wilderossi.blupresence.vo.ProfessorVO;
@@ -49,6 +51,12 @@ public class AuthenticationFormActivity extends BaseActivity {
                 instituicao.setIdProfessor(prof.getId());
 
                 instituicaoService.salvar(instituicao);
+                Context context = getApplicationContext();
+                CharSequence text = "Instituição salva com sucesso!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 AuthenticationFormActivity.this.finish();
                 SingletonHelper.instituicaoListActivity.carregaInstituicoes();
             }

@@ -33,7 +33,7 @@ public class TurmaListActivity extends BaseActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         baseUrl = getStringExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_URL_INSTITUICAO);
         String idProfessor = getStringExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_IDPROFESSOR_INSTITUICAO);
-        idInstituicao = Long.valueOf(getIntExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_ID_INSTITUICAO));
+        idInstituicao = getLongExtra(savedInstanceState, TurmaInstituicaoListActivity.PARAM_ID_INSTITUICAO);
         listagem = (ListView) findViewById(R.id.listagemTurma);
         TurmaApi service = new TurmaApi(baseUrl, idProfessor){
             @Override

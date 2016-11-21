@@ -64,11 +64,19 @@ public class InstituicaoService {
 
         if(dados != null && dados.moveToFirst()){
             do {
-                instituicoes.add(new Instituicao(dados.getInt(0), dados.getString(1), dados.getString(2), dados.getString(3)));
+                instituicoes.add(new Instituicao(dados.getLong(0), dados.getString(1), dados.getString(2), dados.getString(3)));
             } while (dados.moveToNext());
         }
 
         db.close();
         return instituicoes;
+    }
+
+    public Instituicao getById(Long id){
+        for (Instituicao instituicao : this.buscar()){
+            if (instituicao.getId().equals(id))
+                return instituicao;
+        }
+        return null;
     }
 }

@@ -11,12 +11,15 @@ import java.util.List;
 import br.com.wilderossi.blupresence.transaction.Turma;
 import br.com.wilderossi.blupresence.transaction.database.CriaBanco;
 import br.com.wilderossi.blupresence.transaction.database.TabelaTurma;
+import br.com.wilderossi.blupresence.vo.TurmaInstituicaoVO;
 
 public class TurmaService {
     private SQLiteDatabase db;
     private CriaBanco banco;
+    private Context context;
 
     public TurmaService(Context context) {
+        this.context = context;
         banco = new CriaBanco(context);
     }
 
@@ -72,5 +75,16 @@ public class TurmaService {
 
         db.close();
         return turmas;
+    }
+
+    public List<TurmaInstituicaoVO> buscarTurmasInstituicao(){
+        List<TurmaInstituicaoVO> turmasInstituicao = new ArrayList<>();
+        InstituicaoService instituicaoService = new InstituicaoService(context);
+
+        for (Turma turma : this.buscar()){
+            turmasInstituicao.add(new TurmaInstituicaoVO(turma, instituicaoService.getById(turma.getInstituicaoId())));
+        }
+
+        return turmasInstituicao;
     }
 }

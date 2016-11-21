@@ -2,12 +2,12 @@ package br.com.wilderossi.blupresence.transaction;
 
 public class Instituicao {
 
-    private Integer id;
+    private Long id;
     private String nome;
     private String url;
     private String idProfessor;
 
-    public Instituicao(Integer id, String nome, String cidade, String idProfessor) {
+    public Instituicao(Long id, String nome, String cidade, String idProfessor) {
         this.id = id;
         this.nome = nome;
         this.url = cidade;
@@ -18,11 +18,11 @@ public class Instituicao {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

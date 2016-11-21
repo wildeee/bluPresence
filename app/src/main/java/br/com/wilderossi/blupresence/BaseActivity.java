@@ -41,5 +41,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Creatabl
         return returnData;
     }
 
+    protected Long getLongExtra(Bundle savedInstanceState, String id) {
+        Long returnData;
+        returnData = (savedInstanceState == null) ? null : (Long) savedInstanceState
+                .getSerializable(id);
+        if (returnData == null) {
+            Bundle extras = getIntent().getExtras();
+            returnData = extras != null ? extras.getLong(id) : null;
+        }
+        return returnData;
+    }
+
 
 }

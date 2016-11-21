@@ -16,4 +16,8 @@ public class MainActivity extends BaseActivity {
     public void onClickTurma(View view){
         redirectTo(TurmaInstituicaoListActivity.class);
     }
+
+    public void onClickChamada(View view){
+        redirectTo(ChamadaTurmaListActivity.class);
+    }
 }

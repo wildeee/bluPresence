@@ -15,6 +15,7 @@ import br.com.wilderossi.blupresence.vo.TurmaInstituicaoVO;
 public class TurmaInstituicaoVOAdapter extends ArrayAdapter<TurmaInstituicaoVO> {
 
     private int layoutResource;
+    private static final String INSTITUICAO_FORMAT = " - %s";
 
     public TurmaInstituicaoVOAdapter(Context context, int layoutResource, List<TurmaInstituicaoVO> objects) {
         super(context, layoutResource, objects);
@@ -36,7 +37,9 @@ public class TurmaInstituicaoVOAdapter extends ArrayAdapter<TurmaInstituicaoVO> 
         TextView txtNomeInstituicao = (TextView) view.findViewById(R.id.txtNomeInstituicao);
 
         txtNomeTurma.setText(turmaInstituicaoVO.getTurma().getDescricao());
-        txtNomeInstituicao.setText(turmaInstituicaoVO.getInstituicao().getNome());
+
+        String instituicao = String.format(INSTITUICAO_FORMAT, turmaInstituicaoVO.getInstituicao().getNome());
+        txtNomeInstituicao.setText(instituicao);
 
 
         return view;

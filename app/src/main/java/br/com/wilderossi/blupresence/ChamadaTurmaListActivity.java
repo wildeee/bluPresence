@@ -1,7 +1,6 @@
 package br.com.wilderossi.blupresence;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import java.util.List;

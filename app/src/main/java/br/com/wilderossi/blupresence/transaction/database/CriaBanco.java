@@ -13,7 +13,8 @@ public class CriaBanco extends SQLiteOpenHelper {
     private static final TableCreator[] tabelas = {
             new TabelaInstituicao(),
             new TabelaTurma(),
-            new TabelaAluno()
+            new TabelaAluno(),
+            new TabelaChamada()
     };
 
     public CriaBanco(Context context) {

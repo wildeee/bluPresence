@@ -24,6 +24,8 @@
         <activity android:name=".TurmaListActivity"            />
         <activity android:name=".TurmaFormActivity"            />
         <activity android:name=".ChamadaTurmaListActivity"     />
+        <activity android:name=".ChamadaListActivity"          />
+        <activity android:name=".ChamadaFormActivity"          />
 
     </application>
 

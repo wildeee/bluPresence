@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="br.com.wilderossi.blupresence.ChamadaFormActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/turma"
+        android:id="@+id/lblChamadaTurma"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/txtChamadaTurma"
+        android:layout_below="@+id/lblChamadaTurma"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/data"
+        android:id="@+id/lblDataChamada"
+        android:layout_below="@+id/txtChamadaTurma"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/dataChamada"
+        android:layout_below="@+id/lblDataChamada"
+        android:layout_alignParentStart="true"
+        android:onClick="onClickDatePicker"
+        android:layout_alignEnd="@+id/txtChamadaTurma" />
+
+    <ListView
+        android:id="@+id/listViewAlunosChamada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataChamada"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnSalvarChamada" />
+
+    <Button
+        android:id="@+id/btnSalvarChamada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/salvar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/listViewAlunosChamada"
+        android:onClick="onClickSalvarChamada"/>
+
+</RelativeLayout>

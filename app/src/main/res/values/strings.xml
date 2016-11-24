@@ -19,4 +19,7 @@
     <string name="sucessoMensagemSufixo">\nRecebido às </string>
     <string name="turma">Turma</string>
     <string name="salvar">Salvar</string>
+    <string name="nova_chamada">Nova Chamada</string>
+    <string name="data">Data</string>
+    <string name="abrir_conexao">Abrir Conexão</string>
 </resources>

@@ -74,4 +74,15 @@ public class AlunoService {
         db.close();
         return alunos;
     }
+
+    public List<Aluno> buscarPorTurma(Long idTurma) {
+        List<Aluno> alunos = new ArrayList<>();
+        for(Aluno aluno : this.buscar()){
+            if (idTurma.equals(aluno.getTurmaId())){
+                alunos.add(aluno);
+            }
+        }
+
+        return alunos;
+    }
 }

@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -14,9 +15,9 @@ import br.com.wilderossi.blupresence.util.DateUtils;
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private final Calendar calendar;
-    private final EditText dateField;
+    private final TextView dateField;
 
-    public DatePickerFragment(Calendar calendar, EditText dateField) {
+    public DatePickerFragment(Calendar calendar, TextView dateField) {
         this.calendar = calendar;
         this.dateField = dateField;
     }

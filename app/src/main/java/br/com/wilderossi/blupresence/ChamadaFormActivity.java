@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +34,7 @@ public class ChamadaFormActivity extends BaseActivity {
 
     private Long idTurma;
     private Calendar dataChamada;
-    private EditText txtDataChamada;
+    private TextView txtDataChamada;
     private ListView alunosListView;
 
     @Override
@@ -47,13 +49,15 @@ public class ChamadaFormActivity extends BaseActivity {
         Locale locale = getResources().getConfiguration().locale;
         Locale.setDefault(locale);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         idTurma = getLongExtra(savedInstanceState, ChamadaListActivity.TURMA_PARAM);
 
         String nomeTurma = getStringExtra(savedInstanceState, ChamadaListActivity.NOME_TURMA_PARAM);
         TextView txtChamadaTurma = (TextView) findViewById(R.id.txtChamadaTurma);
         txtChamadaTurma.setText(nomeTurma);
 
-        txtDataChamada = (EditText) findViewById(R.id.dataChamada);
+        txtDataChamada = (TextView) findViewById(R.id.dataChamada);
         dataChamada = Calendar.getInstance();
         txtDataChamada.setText(DateUtils.getDateString(dataChamada));
 
@@ -73,9 +77,16 @@ public class ChamadaFormActivity extends BaseActivity {
     }
 
     public void onClickDatePicker(View view){
+//        disableDateFieldKeyboard();
         DialogFragment newFragment = new DatePickerFragment(dataChamada, txtDataChamada);
         newFragment.show(getFragmentManager(), "datePicker");
     }
+
+//    private void disableDateFieldKeyboard(){
+//        TextView dateEditText = (TextView) findViewById(R.id.dataChamada);
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(dateEditText.getWindowToken(), 0);
+//    }
 
     public void onClickSalvarChamada(View view) throws DatabaseServiceException {
 

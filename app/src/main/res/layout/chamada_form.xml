@@ -38,22 +38,47 @@
         android:layout_below="@+id/txtChamadaTurma"
         android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/dataChamada"
+        android:id="@+id/divDataChamada"
         android:layout_below="@+id/lblDataChamada"
-        android:layout_alignParentStart="true"
-        android:onClick="onClickDatePicker"
-        android:layout_alignEnd="@+id/txtChamadaTurma" />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/dataChamada"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:onClick="onClickDatePicker" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alterar"
+                android:onClick="onClickDatePicker"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listViewAlunosChamada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dataChamada"
+        android:layout_below="@+id/divDataChamada"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/btnSalvarChamada" />
 

@@ -34,17 +34,17 @@ public class ChamadaAlunoAdapter extends ArrayAdapter<AlunoPresencaVO> {
             view = layoutInflater.inflate(layoutResource, null);
         }
 
-        final AlunoPresencaVO turmaInstituicaoVO = getItem(position);
+        final AlunoPresencaVO alunoPresencaVO = getItem(position);
 
         TextView txtNomeAlunoChamada = (TextView) view.findViewById(R.id.txtNomeAlunoChamada);
         CheckBox checkBoxAlunoPresente = (CheckBox) view.findViewById(R.id.checkBoxAlunoPresente);
 
-        txtNomeAlunoChamada.setText(turmaInstituicaoVO.getAluno().getNome());
-        checkBoxAlunoPresente.setChecked(turmaInstituicaoVO.getPresente());
-        checkBoxAlunoPresente.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        txtNomeAlunoChamada.setText(alunoPresencaVO.getAluno().getNome());
+        checkBoxAlunoPresente.setChecked(alunoPresencaVO.getPresente());
+        checkBoxAlunoPresente.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                turmaInstituicaoVO.setPresente(isChecked);
+            public void onClick(View v) {
+                alunoPresencaVO.setPresente(!alunoPresencaVO.getPresente());
             }
         });
 

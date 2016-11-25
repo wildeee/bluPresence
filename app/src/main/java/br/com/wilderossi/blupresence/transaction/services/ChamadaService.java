@@ -8,16 +8,24 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.wilderossi.blupresence.transaction.AlunoPresenca;
 import br.com.wilderossi.blupresence.transaction.Chamada;
 import br.com.wilderossi.blupresence.transaction.database.CriaBanco;
 import br.com.wilderossi.blupresence.transaction.database.TabelaChamada;
+import br.com.wilderossi.blupresence.vo.AlunoPresencaVO;
+import br.com.wilderossi.blupresence.vo.ChamadaEditVO;
 
 public class ChamadaService {
     private SQLiteDatabase db;
     private CriaBanco banco;
 
+    private final AlunoPresencaService alunoPresencaService;
+    private final AlunoService alunoService;
+
     public ChamadaService(Context context) {
         banco = new CriaBanco(context);
+        alunoPresencaService = new AlunoPresencaService(context);
+        alunoService = new AlunoService(context);
     }
 
     public Long salvar(Chamada chamada) throws DatabaseServiceException {
@@ -82,5 +90,38 @@ public class ChamadaService {
         }
 
         return returnList;
+    }
+
+    public ChamadaEditVO findById(Long idChamada) {
+        Chamada chamada = null;
+        for (Chamada c : this.buscar()){
+            if (idChamada.equals(c.getId())){
+                chamada = c;
+                break;
+            }
+        }
+        if (chamada == null){
+            return null;
+        }
+        ChamadaEditVO vo = new ChamadaEditVO();
+
+        vo.setId(chamada.getId());
+        vo.setIdTurma(chamada.getIdTurma());
+        vo.setData(chamada.getData());
+        vo.setSincronizado(chamada.getSincronizado());
+
+        List<AlunoPresenca> alunosPresenca = alunoPresencaService.findByChamada(chamada.getId());
+        List<AlunoPresencaVO> alunosVo = new ArrayList<>();
+
+        for (AlunoPresenca alunoPresenca : alunosPresenca){
+            AlunoPresencaVO alunoVo = new AlunoPresencaVO();
+            alunoVo.setPresente(alunoPresenca.getPresente());
+            alunoVo.setAluno(alunoService.findById(alunoPresenca.getIdAluno()));
+            alunoVo.setId(alunoPresenca.getId());
+            alunosVo.add(alunoVo);
+        }
+
+        vo.setAlunos(alunosVo);
+        return vo;
     }
 }

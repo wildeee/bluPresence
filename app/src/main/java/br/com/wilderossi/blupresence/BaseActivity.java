@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import java.io.Serializable;
+
 public abstract class BaseActivity extends AppCompatActivity implements Creatable {
 
     protected Intent setParameters(Intent intent){ return intent; }
@@ -51,6 +53,4 @@ public abstract class BaseActivity extends AppCompatActivity implements Creatabl
         }
         return returnData;
     }
-
-
 }

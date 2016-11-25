@@ -1,11 +1,12 @@
 package br.com.wilderossi.blupresence.transaction;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import br.com.wilderossi.blupresence.components.SubtitledAdapter;
 import br.com.wilderossi.blupresence.util.DateUtils;
 
-public class Chamada implements SubtitledAdapter {
+public class Chamada implements SubtitledAdapter, Serializable {
 
     private Long id;
     private Boolean sincronizado;

@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import br.com.wilderossi.blupresence.components.ChamadaAlunoAdapter;
 import br.com.wilderossi.blupresence.components.DatePickerFragment;
+import br.com.wilderossi.blupresence.components.Toaster;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Aluno;
 import br.com.wilderossi.blupresence.transaction.AlunoPresenca;
@@ -29,6 +30,7 @@ import br.com.wilderossi.blupresence.transaction.services.ChamadaService;
 import br.com.wilderossi.blupresence.transaction.services.DatabaseServiceException;
 import br.com.wilderossi.blupresence.util.DateUtils;
 import br.com.wilderossi.blupresence.vo.AlunoPresencaVO;
+import br.com.wilderossi.blupresence.vo.ChamadaEditVO;
 
 public class ChamadaFormActivity extends BaseActivity {
 
@@ -36,6 +38,11 @@ public class ChamadaFormActivity extends BaseActivity {
     private Calendar dataChamada;
     private TextView txtDataChamada;
     private ListView alunosListView;
+
+    private Boolean editMode;
+    private ChamadaEditVO chamadaEditVO;
+
+    private ChamadaService serviceChamadaSQLite;
 
     @Override
     public int getActivity() {
@@ -49,19 +56,41 @@ public class ChamadaFormActivity extends BaseActivity {
         Locale locale = getResources().getConfiguration().locale;
         Locale.setDefault(locale);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
         idTurma = getLongExtra(savedInstanceState, ChamadaListActivity.TURMA_PARAM);
+        Long idChamada = getLongExtra(savedInstanceState, ChamadaListActivity.CHAMADA_CLICADA);
+        serviceChamadaSQLite = new ChamadaService(this);
 
         String nomeTurma = getStringExtra(savedInstanceState, ChamadaListActivity.NOME_TURMA_PARAM);
         TextView txtChamadaTurma = (TextView) findViewById(R.id.txtChamadaTurma);
         txtChamadaTurma.setText(nomeTurma);
 
         txtDataChamada = (TextView) findViewById(R.id.dataChamada);
+        alunosListView = (ListView) findViewById(R.id.listViewAlunosChamada);
+
+        editMode = idChamada != -1L;
+        if (editMode){
+            chamadaEditVO = serviceChamadaSQLite.findById(idChamada);
+            setUpViewEdit();
+        } else {
+            setUpView();
+        }
+    }
+
+    private void setUpViewEdit() {
+        dataChamada = chamadaEditVO.getData();
+        txtDataChamada.setText(DateUtils.getDateString(dataChamada));
+        alunosListView.setAdapter(new ChamadaAlunoAdapter(
+                this,
+                R.layout.chamada_listadapter_layout,
+                chamadaEditVO.getAlunos()
+        ));
+    }
+
+    private void setUpView(){
         dataChamada = Calendar.getInstance();
         txtDataChamada.setText(DateUtils.getDateString(dataChamada));
 
-        alunosListView = (ListView) findViewById(R.id.listViewAlunosChamada);
+
         List<Aluno> alunos = new AlunoService(this).buscarPorTurma(idTurma);
         List<AlunoPresencaVO> alunosVO = new ArrayList<>();
         for (Aluno aluno : alunos){
@@ -77,22 +106,53 @@ public class ChamadaFormActivity extends BaseActivity {
     }
 
     public void onClickDatePicker(View view){
-//        disableDateFieldKeyboard();
         DialogFragment newFragment = new DatePickerFragment(dataChamada, txtDataChamada);
         newFragment.show(getFragmentManager(), "datePicker");
     }
 
-//    private void disableDateFieldKeyboard(){
-//        TextView dateEditText = (TextView) findViewById(R.id.dataChamada);
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(dateEditText.getWindowToken(), 0);
-//    }
-
     public void onClickSalvarChamada(View view) throws DatabaseServiceException {
 
+        if (editMode){
+            editaChamada();
+        } else {
+            salvaNovaChamada();
+        }
+
+        SingletonHelper.chamadaListActivity.carregaChamadas();
+        this.finish();
+    }
+
+    private void editaChamada() throws DatabaseServiceException {
         Chamada chamada = new Chamada();
-        ChamadaService serviceChamadaSQLite = new ChamadaService(getBaseContext());
-        AlunoPresencaService serviceAlunoPresencaSQLite = new AlunoPresencaService(getBaseContext());
+        AlunoPresencaService serviceAlunoPresencaSQLite = new AlunoPresencaService(this);
+
+        chamada.setData(dataChamada);
+        chamada.setIdTurma(chamadaEditVO.getIdTurma());
+        chamada.setSincronizado(chamadaEditVO.getSincronizado());
+        chamada.setId(chamadaEditVO.getId());
+
+        serviceChamadaSQLite.salvar(chamada);
+
+        for (int i = 0; i < alunosListView.getAdapter().getCount(); i++){
+            AlunoPresencaVO vo = (AlunoPresencaVO) alunosListView.getItemAtPosition(i);
+            AlunoPresenca alunoPresenca = new AlunoPresenca();
+
+            alunoPresenca.setId(chamadaEditVO.getAlunos().get(i).getId());
+            alunoPresenca.setIdAluno(vo.getAluno().getId());
+            alunoPresenca.setIdChamada(chamada.getId());
+            alunoPresenca.setPresente(vo.getPresente());
+
+            Log.v(vo.getAluno().getNome(), alunoPresenca.getPresente() ? "SIM" : "NAO");
+
+            serviceAlunoPresencaSQLite.salvar(alunoPresenca);
+        }
+
+        Toaster.makeToast(getApplicationContext(), "Chamada alterada com sucesso!");
+    }
+
+    private void salvaNovaChamada() throws DatabaseServiceException {
+        Chamada chamada = new Chamada();
+        AlunoPresencaService serviceAlunoPresencaSQLite = new AlunoPresencaService(this);
 
         chamada.setData(dataChamada);
         chamada.setIdTurma(idTurma);
@@ -111,14 +171,6 @@ public class ChamadaFormActivity extends BaseActivity {
             serviceAlunoPresencaSQLite.salvar(alunoPresenca);
         }
 
-        Context context = getApplicationContext();
-        CharSequence text = "Chamada salva com sucesso!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-        SingletonHelper.chamadaListActivity.carregaChamadas();
-        this.finish();
+        Toaster.makeToast(getApplicationContext(), "Chamada salva com sucesso!");
     }
 }

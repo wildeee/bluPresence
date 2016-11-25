@@ -68,10 +68,6 @@
                 android:text="@string/alterar"
                 android:onClick="onClickDatePicker"/>
         </LinearLayout>
-
-
-
-
     </LinearLayout>
 
     <ListView

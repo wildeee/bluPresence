@@ -85,4 +85,13 @@ public class AlunoService {
 
         return alunos;
     }
+
+    public Aluno findById(Long idAluno) {
+        for (Aluno aluno : this.buscar()){
+            if (idAluno.equals(aluno.getId())){
+                return aluno;
+            }
+        }
+        return null;
+    }
 }

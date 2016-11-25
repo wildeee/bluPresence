@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.wilderossi.blupresence.transaction.AlunoPresenca;
 import br.com.wilderossi.blupresence.transaction.database.CriaBanco;
 import br.com.wilderossi.blupresence.transaction.database.TabelaAlunoPresenca;
+import br.com.wilderossi.blupresence.vo.AlunoPresencaVO;
 
 public class AlunoPresencaService {
     private SQLiteDatabase db;
@@ -71,5 +72,17 @@ public class AlunoPresencaService {
 
         db.close();
         return instituicoes;
+    }
+
+    public List<AlunoPresenca> findByChamada(Long chamadaId) {
+        List<AlunoPresenca> alunos = new ArrayList<>();
+
+        for (AlunoPresenca alunoPresenca : this.buscar()){
+            if (chamadaId.equals(alunoPresenca.getIdChamada())){
+                alunos.add(alunoPresenca);
+            }
+        }
+
+        return alunos;
     }
 }

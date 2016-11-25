@@ -14,7 +14,8 @@ public class CriaBanco extends SQLiteOpenHelper {
             new TabelaInstituicao(),
             new TabelaTurma(),
             new TabelaAluno(),
-            new TabelaChamada()
+            new TabelaChamada(),
+            new TabelaAlunoPresenca()
     };
 
     public CriaBanco(Context context) {

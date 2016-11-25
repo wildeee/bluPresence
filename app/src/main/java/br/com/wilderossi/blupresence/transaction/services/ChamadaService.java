@@ -20,19 +20,19 @@ public class ChamadaService {
         banco = new CriaBanco(context);
     }
 
-    public Long salvar(Chamada instituicao) throws DatabaseServiceException {
+    public Long salvar(Chamada chamada) throws DatabaseServiceException {
         ContentValues valores;
         long resultado = -1;
 
         db = banco.getWritableDatabase();
         valores = new ContentValues();
 
-        valores.put(TabelaChamada.SINCRONIZADO, instituicao.getSincronizadoSQLite());
-        valores.put(TabelaChamada.TURMA_FK, instituicao.getIdTurma());
-        valores.put(TabelaChamada.DATA, instituicao.getDataSQLite());
+        valores.put(TabelaChamada.SINCRONIZADO, chamada.getSincronizadoSQLite());
+        valores.put(TabelaChamada.TURMA_FK, chamada.getIdTurma());
+        valores.put(TabelaChamada.DATA, chamada.getDataSQLite());
 
-        if (instituicao.getId() != null && instituicao.getId() != 0){
-            String where = TabelaChamada.ID + " = " + instituicao.getId();
+        if (chamada.getId() != null && chamada.getId() != 0){
+            String where = TabelaChamada.ID + " = " + chamada.getId();
             resultado = db.update(TabelaChamada.TABELA, valores, where, null);
         } else {
             resultado = db.insert(TabelaChamada.TABELA, null, valores);
@@ -57,7 +57,7 @@ public class ChamadaService {
 
     public List<Chamada> buscar(){
         Cursor dados;
-        List<Chamada> instituicoes = new ArrayList<>();
+        List<Chamada> chamadas = new ArrayList<>();
         String[] campos =  {TabelaChamada.ID, TabelaChamada.SINCRONIZADO, TabelaChamada.TURMA_FK, TabelaChamada.DATA};
 
         db = banco.getReadableDatabase();
@@ -65,11 +65,11 @@ public class ChamadaService {
 
         if(dados != null && dados.moveToFirst()){
             do {
-                instituicoes.add(new Chamada(dados.getLong(0), dados.getInt(1), dados.getLong(2), dados.getString(3)));
+                chamadas.add(new Chamada(dados.getLong(0), dados.getInt(1), dados.getLong(2), dados.getString(3)));
             } while (dados.moveToNext());
         }
 
         db.close();
-        return instituicoes;
+        return chamadas;
     }
 }

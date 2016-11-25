@@ -1,14 +1,14 @@
 package br.com.wilderossi.blupresence;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +18,9 @@ import java.util.Locale;
 import br.com.wilderossi.blupresence.components.ChamadaAlunoAdapter;
 import br.com.wilderossi.blupresence.components.DatePickerFragment;
 import br.com.wilderossi.blupresence.transaction.Aluno;
+import br.com.wilderossi.blupresence.transaction.AlunoPresenca;
 import br.com.wilderossi.blupresence.transaction.Chamada;
+import br.com.wilderossi.blupresence.transaction.services.AlunoPresencaService;
 import br.com.wilderossi.blupresence.transaction.services.AlunoService;
 import br.com.wilderossi.blupresence.transaction.services.ChamadaService;
 import br.com.wilderossi.blupresence.transaction.services.DatabaseServiceException;
@@ -77,19 +79,33 @@ public class ChamadaFormActivity extends BaseActivity {
     public void onClickSalvarChamada(View view) throws DatabaseServiceException {
 
         Chamada chamada = new Chamada();
-        ChamadaService serviceSQLite = new ChamadaService(getBaseContext());
+        ChamadaService serviceChamadaSQLite = new ChamadaService(getBaseContext());
+        AlunoPresencaService serviceAlunoPresencaSQLite = new AlunoPresencaService(getBaseContext());
 
         chamada.setData(dataChamada);
         chamada.setIdTurma(idTurma);
         chamada.setSincronizado(Boolean.FALSE);
 
-        Long chamadaId = serviceSQLite.salvar(chamada);
-        for (Chamada c : serviceSQLite.buscar()){
-            Log.v("dataChamada", c.getDataSQLite());
-        }
+        Long chamadaId = serviceChamadaSQLite.salvar(chamada);
 
         for (int i = 0; i < alunosListView.getAdapter().getCount(); i++){
             AlunoPresencaVO vo = (AlunoPresencaVO) alunosListView.getItemAtPosition(i);
+            AlunoPresenca alunoPresenca = new AlunoPresenca();
+
+            alunoPresenca.setIdAluno(vo.getAluno().getId());
+            alunoPresenca.setIdChamada(chamadaId);
+            alunoPresenca.setPresente(vo.getPresente());
+
+            serviceAlunoPresencaSQLite.salvar(alunoPresenca);
         }
+
+        Context context = getApplicationContext();
+        CharSequence text = "Chamada salva com sucesso!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        this.finish();
     }
 }

@@ -29,7 +29,7 @@ public class ChamadaService {
 
         valores.put(TabelaChamada.SINCRONIZADO, chamada.getSincronizadoSQLite());
         valores.put(TabelaChamada.TURMA_FK, chamada.getIdTurma());
-        valores.put(TabelaChamada.DATA, chamada.getDataSQLite());
+        valores.put(TabelaChamada.DATA, chamada.getDataStr());
 
         if (chamada.getId() != null && chamada.getId() != 0){
             String where = TabelaChamada.ID + " = " + chamada.getId();
@@ -71,5 +71,16 @@ public class ChamadaService {
 
         db.close();
         return chamadas;
+    }
+
+    public List<Chamada> findByTurma(Long idTurma) {
+        List<Chamada> returnList = new ArrayList<>();
+        for (Chamada chamada : this.buscar()){
+            if (idTurma.equals(chamada.getIdTurma())){
+                returnList.add(chamada);
+            }
+        }
+
+        return returnList;
     }
 }

@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import br.com.wilderossi.blupresence.components.ChamadaAlunoAdapter;
 import br.com.wilderossi.blupresence.components.DatePickerFragment;
+import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Aluno;
 import br.com.wilderossi.blupresence.transaction.AlunoPresenca;
 import br.com.wilderossi.blupresence.transaction.Chamada;
@@ -106,6 +107,7 @@ public class ChamadaFormActivity extends BaseActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
+        SingletonHelper.chamadaListActivity.carregaChamadas();
         this.finish();
     }
 }

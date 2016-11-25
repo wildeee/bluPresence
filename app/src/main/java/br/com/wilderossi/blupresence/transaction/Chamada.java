@@ -2,9 +2,10 @@ package br.com.wilderossi.blupresence.transaction;
 
 import java.util.Calendar;
 
+import br.com.wilderossi.blupresence.components.SubtitledAdapter;
 import br.com.wilderossi.blupresence.util.DateUtils;
 
-public class Chamada {
+public class Chamada implements SubtitledAdapter {
 
     private Long id;
     private Boolean sincronizado;
@@ -56,7 +57,17 @@ public class Chamada {
         return sincronizado ? 1 : 0;
     }
 
-    public String getDataSQLite() {
+    public String getDataStr() {
         return DateUtils.getDateString(data);
+    }
+
+    @Override
+    public String getMainString() {
+        return this.getDataStr();
+    }
+
+    @Override
+    public String getSubtitle() {
+        return sincronizado ? "" : "Não sincronizado";
     }
 }

@@ -3,6 +3,15 @@ package br.com.wilderossi.blupresence;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
+
+import br.com.wilderossi.blupresence.components.SubtitledArrayAdapter;
+import br.com.wilderossi.blupresence.navigation.SingletonHelper;
+import br.com.wilderossi.blupresence.transaction.Chamada;
+import br.com.wilderossi.blupresence.transaction.services.ChamadaService;
 
 public class ChamadaListActivity extends BaseActivity {
 
@@ -26,6 +35,7 @@ public class ChamadaListActivity extends BaseActivity {
         idTurma = getLongExtra(savedInstanceState, ChamadaTurmaListActivity.TURMA_PARAM);
         nomeTurma = getStringExtra(savedInstanceState, ChamadaTurmaListActivity.NOME_TURMA_PARAM);
 
+        carregaChamadas();
     }
 
     public void onClickNovaChamada(View view){
@@ -34,8 +44,20 @@ public class ChamadaListActivity extends BaseActivity {
 
     @Override
     protected Intent setParameters(Intent intent) {
+        SingletonHelper.chamadaListActivity = this;
         intent.putExtra(TURMA_PARAM, idTurma);
         intent.putExtra(NOME_TURMA_PARAM, nomeTurma);
         return super.setParameters(intent);
+    }
+
+    public void carregaChamadas(){
+        ListView listViewChamada = (ListView) findViewById(R.id.listViewChamadas);
+        ChamadaService chamadaService = new ChamadaService(this);
+        List<Chamada> chamadasTurma = chamadaService.findByTurma(idTurma);
+        listViewChamada.setAdapter(new SubtitledArrayAdapter(
+                this,
+                R.layout.subtitled_listadapter_layout,
+                chamadasTurma
+        ));
     }
 }

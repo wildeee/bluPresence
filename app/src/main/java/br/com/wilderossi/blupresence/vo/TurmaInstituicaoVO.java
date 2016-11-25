@@ -1,9 +1,10 @@
 package br.com.wilderossi.blupresence.vo;
 
+import br.com.wilderossi.blupresence.components.SubtitledAdapter;
 import br.com.wilderossi.blupresence.transaction.Instituicao;
 import br.com.wilderossi.blupresence.transaction.Turma;
 
-public class TurmaInstituicaoVO {
+public class TurmaInstituicaoVO implements SubtitledAdapter {
 
     private Turma turma;
     private Instituicao instituicao;
@@ -27,5 +28,15 @@ public class TurmaInstituicaoVO {
 
     public void setInstituicao(Instituicao instituicao) {
         this.instituicao = instituicao;
+    }
+
+    @Override
+    public String getMainString() {
+        return turma.getDescricao();
+    }
+
+    @Override
+    public String getSubtitle() {
+        return instituicao.getNome();
     }
 }

@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import br.com.wilderossi.blupresence.components.TurmaInstituicaoVOAdapter;
+import br.com.wilderossi.blupresence.components.SubtitledArrayAdapter;
 import br.com.wilderossi.blupresence.transaction.services.TurmaService;
 import br.com.wilderossi.blupresence.vo.TurmaInstituicaoVO;
 
@@ -17,8 +17,8 @@ public class ChamadaTurmaListActivity extends BaseActivity implements AdapterVie
     private ListView listView;
     private TurmaInstituicaoVO turmaInstituicaoVOclicado;
 
-    public static final String URL_PARAM   = "url";
-    public static final String TURMA_PARAM = "turma";
+    public static final String URL_PARAM        = "url";
+    public static final String TURMA_PARAM      = "turma";
     public static final String NOME_TURMA_PARAM = "nomeTurma";
 
     @Override
@@ -36,9 +36,9 @@ public class ChamadaTurmaListActivity extends BaseActivity implements AdapterVie
 
         listView = (ListView) findViewById(R.id.listViewChamadaTurma);
 
-        listView.setAdapter(new TurmaInstituicaoVOAdapter(
+        listView.setAdapter(new SubtitledArrayAdapter(
                 this,
-                R.layout.turma_instituicao_listadapter_layout,
+                R.layout.subtitled_listadapter_layout,
                 turmasInstituicaoVO
         ));
         listView.setOnItemClickListener(this);

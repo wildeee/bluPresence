@@ -55,7 +55,7 @@ public class ChamadaService {
         return resultado;
     }
 
-    public boolean remover(Integer id){
+    public boolean remover(Long id){
         String where = TabelaChamada.ID + " = " + id;
         db = banco.getReadableDatabase();
         int resultado = db.delete(TabelaChamada.TABELA, where, null);

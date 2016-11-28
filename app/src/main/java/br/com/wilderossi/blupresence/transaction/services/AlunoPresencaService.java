@@ -48,7 +48,7 @@ public class AlunoPresencaService {
         return resultado;
     }
 
-    public boolean remover(Integer id){
+    public boolean remover(Long id){
         String where = TabelaAlunoPresenca.ID + " = " + id;
         db = banco.getReadableDatabase();
         int resultado = db.delete(TabelaAlunoPresenca.TABELA, where, null);
@@ -84,5 +84,13 @@ public class AlunoPresencaService {
         }
 
         return alunos;
+    }
+
+    public void removeByChamadaId(Long id) {
+        for (AlunoPresenca aluno : this.buscar()){
+            if (id.equals(aluno.getIdChamada())){
+                this.remover(aluno.getId());
+            }
+        }
     }
 }

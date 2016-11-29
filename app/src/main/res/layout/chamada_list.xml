@@ -13,12 +13,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nova_chamada"
+        android:text="@string/enviar_dados"
+        android:id="@+id/btnEnviarDados"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:onClick="onClickEnviarDados"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nova_chamada"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:onClick="onClickNovaChamada"
-        android:id="@+id/btnNovaChamada" />
+        android:id="@+id/btnNovaChamada"
+        android:layout_below="@+id/btnEnviarDados"/>
 
     <ListView
         android:layout_width="wrap_content"
@@ -26,4 +36,5 @@
         android:id="@+id/listViewChamadas"
         android:layout_below="@+id/btnNovaChamada"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>

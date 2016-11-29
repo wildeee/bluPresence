@@ -12,13 +12,17 @@ import br.com.wilderossi.blupresence.transaction.AlunoPresenca;
 import br.com.wilderossi.blupresence.transaction.database.CriaBanco;
 import br.com.wilderossi.blupresence.transaction.database.TabelaAlunoPresenca;
 import br.com.wilderossi.blupresence.vo.AlunoPresencaVO;
+import br.com.wilderossi.blupresence.vo.EnviarDadosAlunoVO;
 
 public class AlunoPresencaService {
     private SQLiteDatabase db;
     private CriaBanco banco;
 
+    private final AlunoService alunoService;
+
     public AlunoPresencaService(Context context) {
         banco = new CriaBanco(context);
+        alunoService = new AlunoService(context);
     }
 
     public Long salvar(AlunoPresenca alunoPresenca) throws DatabaseServiceException {
@@ -92,5 +96,17 @@ public class AlunoPresencaService {
                 this.remover(aluno.getId());
             }
         }
+    }
+
+    public List<EnviarDadosAlunoVO> getDadosAlunosParaEnvio(Long idChamada) {
+        List<EnviarDadosAlunoVO> dadosAlunos = new ArrayList<>();
+
+        for (AlunoPresenca aluno : this.buscar()){
+            if (idChamada.equals(aluno.getIdChamada())){
+                dadosAlunos.add(new EnviarDadosAlunoVO(alunoService.getServerIdById(aluno.getIdAluno()) , aluno.getPresente()));
+            }
+        }
+
+        return dadosAlunos;
     }
 }

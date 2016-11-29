@@ -94,4 +94,13 @@ public class AlunoService {
         }
         return null;
     }
+
+    public String getServerIdById(Long id) {
+        for (Aluno aluno : this.buscar()){
+            if (id.equals(aluno.getId())){
+                return aluno.getServerId();
+            }
+        }
+        return null;
+    }
 }

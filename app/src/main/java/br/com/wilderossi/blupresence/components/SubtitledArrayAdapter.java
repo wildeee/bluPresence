@@ -43,6 +43,8 @@ public class SubtitledArrayAdapter extends ArrayAdapter<SubtitledAdapter> {
         String subtitle = subtitleAdapter.getSubtitle();
         if (subtitle != null && !subtitle.isEmpty()){
             txtSubtitle.setText(String.format(SUBTITLE_FORMAT, subtitle));
+        } else {
+            txtSubtitle.setText("");
         }
 
         return view;

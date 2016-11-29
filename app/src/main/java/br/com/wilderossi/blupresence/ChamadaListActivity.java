@@ -4,20 +4,28 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import br.com.wilderossi.blupresence.api.EnviarDadosApi;
+import br.com.wilderossi.blupresence.components.ChamadaDateComparator;
 import br.com.wilderossi.blupresence.components.SubtitledArrayAdapter;
 import br.com.wilderossi.blupresence.components.Toaster;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Chamada;
 import br.com.wilderossi.blupresence.transaction.services.AlunoPresencaService;
 import br.com.wilderossi.blupresence.transaction.services.ChamadaService;
+import br.com.wilderossi.blupresence.util.DateUtils;
+import br.com.wilderossi.blupresence.vo.EnviarDadosErroVO;
+import br.com.wilderossi.blupresence.vo.EnviarDadosVO;
 
 public class ChamadaListActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
@@ -58,6 +66,75 @@ public class ChamadaListActivity extends BaseActivity implements AdapterView.OnI
         carregaChamadas();
     }
 
+    public void onClickEnviarDados(View view){
+        new AlertDialog.Builder(this)
+                .setTitle("Enviar dados")
+                .setMessage("Após enviar as chamadas para o servidor, não será mais possível alterar ou remover pelo aplicativo. Deseja mesmo realizar a operação?")
+                .setPositiveButton("Sim, enviar dados.", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        final List<EnviarDadosVO> dadosParaEnvio = chamadaService.getDadosParaEnvio(idTurma);
+                        EnviarDadosApi enviarDadosApi = new EnviarDadosApi(url, dadosParaEnvio){
+                            @Override
+                            protected void onPostExecute(List<EnviarDadosErroVO> failedInsertIds) {
+                                final List<EnviarDadosVO> dadosSucesso = new ArrayList<EnviarDadosVO>();
+                                final List<EnviarDadosVO> dadosErro    = new ArrayList<EnviarDadosVO>();
+                                for (EnviarDadosVO dado : dadosParaEnvio){
+                                    if (isFalha(failedInsertIds, dado)){
+                                        dadosErro.add(dado);
+                                    } else {
+                                        dadosSucesso.add(dado);
+                                    }
+                                }
+                                chamadaService.setSincronizado(dadosSucesso);
+                                carregaChamadas();
+                                if (dadosErro.isEmpty()){
+                                    Toaster.makeToast(ChamadaListActivity.this, "Sucesso! Chamadas enviadas para a instituição.");
+                                    return;
+                                }
+                                showErrorDialog(dadosErro, failedInsertIds);
+                            }
+                        };
+                        enviarDadosApi.execute();
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
+
+    }
+
+    private void showErrorDialog(List<EnviarDadosVO> dadosErro, List<EnviarDadosErroVO> failedInsertIds) {
+        StringBuilder errors = new StringBuilder();
+        for (EnviarDadosVO dado : dadosErro){
+            for (EnviarDadosErroVO erro : failedInsertIds){
+                if (dado.getIdChamadaApp().equals(erro.getIdChamadaApp())){
+                    errors.append(DateUtils.getDateString(dado.getData()))
+                            .append(" - ")
+                            .append(erro.getErro())
+                            .append("\n");
+                    continue;
+                }
+            }
+        }
+        showAlert(errors.toString());
+    }
+
+    private void showAlert(String errorMessage) {
+        new AlertDialog.Builder(this)
+                .setTitle("Erro ao enviar dados")
+                .setMessage("Problema ao enviar dados:\n" + errorMessage)
+                .setPositiveButton("Ok.", null)
+                .show();
+    }
+
+    private Boolean isFalha(List<EnviarDadosErroVO> failedInsertIds, EnviarDadosVO envio){
+        for (EnviarDadosErroVO falha : failedInsertIds){
+            if (falha.getIdChamadaApp().equals(envio.getIdChamadaApp())){
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
+
     public void onClickNovaChamada(View view){
         chamadaClicada = null;
         redirectTo(ChamadaFormActivity.class);
@@ -74,11 +151,22 @@ public class ChamadaListActivity extends BaseActivity implements AdapterView.OnI
 
     public void carregaChamadas(){
         List<Chamada> chamadasTurma = chamadaService.findByTurma(idTurma);
+        Collections.sort(chamadasTurma, new ChamadaDateComparator());
+
         listViewChamada.setAdapter(new SubtitledArrayAdapter(
                 this,
                 R.layout.subtitled_listadapter_layout,
                 chamadasTurma
         ));
+
+        Button btnEnviarDados = (Button) findViewById(R.id.btnEnviarDados);
+        for (Chamada chamada : chamadasTurma){
+            if (!chamada.getSincronizado()){
+                btnEnviarDados.setEnabled(Boolean.TRUE);
+                return;
+            }
+        }
+        btnEnviarDados.setEnabled(Boolean.FALSE);
     }
 
     @Override

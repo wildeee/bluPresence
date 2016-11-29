@@ -14,6 +14,8 @@ import br.com.wilderossi.blupresence.transaction.database.CriaBanco;
 import br.com.wilderossi.blupresence.transaction.database.TabelaChamada;
 import br.com.wilderossi.blupresence.vo.AlunoPresencaVO;
 import br.com.wilderossi.blupresence.vo.ChamadaEditVO;
+import br.com.wilderossi.blupresence.vo.EnviarDadosAlunoVO;
+import br.com.wilderossi.blupresence.vo.EnviarDadosVO;
 
 public class ChamadaService {
     private SQLiteDatabase db;
@@ -21,11 +23,13 @@ public class ChamadaService {
 
     private final AlunoPresencaService alunoPresencaService;
     private final AlunoService alunoService;
+    private final TurmaService turmaService;
 
     public ChamadaService(Context context) {
         banco = new CriaBanco(context);
         alunoPresencaService = new AlunoPresencaService(context);
         alunoService = new AlunoService(context);
+        turmaService = new TurmaService(context);
     }
 
     public Long salvar(Chamada chamada) throws DatabaseServiceException {
@@ -123,5 +127,69 @@ public class ChamadaService {
 
         vo.setAlunos(alunosVo);
         return vo;
+    }
+
+    public List<EnviarDadosVO> getDadosParaEnvio(Long idTurma) {
+        List<EnviarDadosVO> dadosEnvio = new ArrayList<>();
+        String idTurmaServer = turmaService.getServerIdById(idTurma);
+
+        for (Chamada chamada : findNaoIntegradosByTurma(idTurma)){
+            EnviarDadosVO dado = new EnviarDadosVO();
+            dado.setData(chamada.getData());
+            dado.setIdChamadaApp(chamada.getId());
+            dado.setIdTurma(idTurmaServer);
+            dado.setAlunos(alunoPresencaService.getDadosAlunosParaEnvio(chamada.getId()));
+
+            dadosEnvio.add(dado);
+        }
+
+        return dadosEnvio;
+    }
+
+    private List<Chamada> findNaoIntegradosByTurma(Long idTurma){
+        List<Chamada> chamadas = new ArrayList<>();
+
+        for (Chamada chamada : this.buscar()){
+            if (!chamada.getSincronizado() && idTurma.equals(chamada.getIdTurma())){
+                chamadas.add(chamada);
+            }
+        }
+
+        return chamadas;
+    }
+
+    public void setSincronizado(List<EnviarDadosVO> dadosSucesso) {
+        List<Long> idsParaAtualizar = new ArrayList<>();
+        for (EnviarDadosVO dado : dadosSucesso){
+            idsParaAtualizar.add(dado.getIdChamadaApp());
+        }
+        if (!idsParaAtualizar.isEmpty()){
+            atualizaSincronizacao(idsParaAtualizar);
+        }
+    }
+
+    private void atualizaSincronizacao(List<Long> ids){
+        ContentValues valores;
+        db = banco.getWritableDatabase();
+        valores = new ContentValues();
+
+        valores.put(TabelaChamada.SINCRONIZADO, 1);
+
+        StringBuilder where = new StringBuilder()
+                .append(TabelaChamada.ID)
+                .append(" in (")
+                .append(ids.remove(0));
+
+        for (Long id : ids){
+            where = where
+                    .append(", ")
+                    .append(id);
+        }
+
+        where = where.append(")");
+
+        long res = db.update(TabelaChamada.TABELA, valores, where.toString(), null);
+
+        db.close();
     }
 }

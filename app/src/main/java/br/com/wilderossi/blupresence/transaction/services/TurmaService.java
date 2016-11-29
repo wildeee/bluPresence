@@ -87,4 +87,13 @@ public class TurmaService {
 
         return turmasInstituicao;
     }
+
+    public String getServerIdById(Long idTurma) {
+        for (Turma t : this.buscar()){
+            if (idTurma.equals(t.getId())){
+                return t.getServerId();
+            }
+        }
+        return null;
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 
 import br.com.wilderossi.blupresence.transaction.Aluno;
@@ -17,6 +18,7 @@ import br.com.wilderossi.blupresence.transaction.Turma;
 import br.com.wilderossi.blupresence.transaction.services.AlunoService;
 import br.com.wilderossi.blupresence.transaction.services.DatabaseServiceException;
 import br.com.wilderossi.blupresence.transaction.services.TurmaService;
+import br.com.wilderossi.blupresence.util.AlunoVOComparator;
 import br.com.wilderossi.blupresence.vo.AlunoVO;
 import br.com.wilderossi.blupresence.api.AlunosApi;
 import br.com.wilderossi.blupresence.vo.TurmaVO;
@@ -73,6 +75,7 @@ public class TurmaFormActivity extends BaseActivity {
             protected void onPostExecute(List<AlunoVO> alunoVOs) {
                 loader.cancel();
                 alunos = alunoVOs;
+                Collections.sort(alunos, new AlunoVOComparator());
                 listagem.setAdapter(
                         new ArrayAdapter<>(
                                 TurmaFormActivity.this,

@@ -76,16 +76,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/divDataChamada"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnSalvarChamada" />
+        android:layout_above="@+id/btnWrapperChamadaForm" />
 
-    <Button
-        android:id="@+id/btnSalvarChamada"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/salvar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/listViewAlunosChamada"
-        android:onClick="onClickSalvarChamada"/>
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnWrapperChamadaForm"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnSalvarChamada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/salvar"
+            android:onClick="onClickSalvarChamada"/>
+
+        <Button
+            android:id="@+id/btnAbrirConexao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/abrir_conexao"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

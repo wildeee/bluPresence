@@ -25,7 +25,8 @@
         <activity android:name=".TurmaFormActivity"            />
         <activity android:name=".ChamadaTurmaListActivity"     />
         <activity android:name=".ChamadaListActivity"          />
-        <activity android:name=".ChamadaFormActivity"          />
+        <activity android:name=".ChamadaFormActivity"
+            android:screenOrientation="portrait"               />
 
     </application>
 

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +30,7 @@ import br.com.wilderossi.blupresence.transaction.services.AlunoPresencaService;
 import br.com.wilderossi.blupresence.transaction.services.AlunoService;
 import br.com.wilderossi.blupresence.transaction.services.ChamadaService;
 import br.com.wilderossi.blupresence.transaction.services.DatabaseServiceException;
+import br.com.wilderossi.blupresence.util.AlunoPresencaVOComparator;
 import br.com.wilderossi.blupresence.util.DateUtils;
 import br.com.wilderossi.blupresence.vo.AlunoPresencaVO;
 import br.com.wilderossi.blupresence.vo.ChamadaEditVO;
@@ -90,6 +92,7 @@ public class ChamadaFormActivity extends BaseActivity {
         }
         dataChamada = chamadaEditVO.getData();
         txtDataChamada.setText(DateUtils.getDateString(dataChamada));
+        Collections.sort(chamadaEditVO.getAlunos(), new AlunoPresencaVOComparator());
         alunosListView.setAdapter(new ChamadaAlunoAdapter(
                 this,
                 R.layout.chamada_listadapter_layout,
@@ -109,6 +112,7 @@ public class ChamadaFormActivity extends BaseActivity {
             vo.setAluno(aluno);
             alunosVO.add(vo);
         }
+        Collections.sort(alunosVO, new AlunoPresencaVOComparator());
         alunosListView.setAdapter(new ChamadaAlunoAdapter(
                 this,
                 R.layout.chamada_listadapter_layout,

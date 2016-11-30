@@ -177,12 +177,14 @@ public class ChamadaListActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        final Chamada chamadaLongClicada = (Chamada) listViewChamada.getItemAtPosition(position);
         new AlertDialog.Builder(this)
                 .setTitle("Excluir Chamada")
-                .setMessage("Não será possível recuperar os dados após a exclusão.")
+                .setMessage(chamadaLongClicada.getSincronizado() ?
+                          "A chamada já foi enviada para o servidor. A exclusão será feita somente no aplicativo"
+                        : "Não será possível recuperar os dados após a exclusão.")
                 .setPositiveButton("Ok, remover.", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Chamada chamadaLongClicada = (Chamada) listViewChamada.getItemAtPosition(position);
                         alunoPresencaService.removeByChamadaId(chamadaLongClicada.getId());
                         chamadaService.remover(chamadaLongClicada.getId());
                         ChamadaListActivity.this.carregaChamadas();

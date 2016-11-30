@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class ChamadaFormActivity extends BaseActivity {
     private Calendar dataChamada;
     private TextView txtDataChamada;
     private ListView alunosListView;
+    private Button btnSalvarChamada;
 
     private Boolean editMode;
     private ChamadaEditVO chamadaEditVO;
@@ -66,6 +68,7 @@ public class ChamadaFormActivity extends BaseActivity {
 
         txtDataChamada = (TextView) findViewById(R.id.dataChamada);
         alunosListView = (ListView) findViewById(R.id.listViewAlunosChamada);
+        btnSalvarChamada = (Button) findViewById(R.id.btnSalvarChamada);
 
         editMode = idChamada != -1L;
         if (editMode){
@@ -77,6 +80,14 @@ public class ChamadaFormActivity extends BaseActivity {
     }
 
     private void setUpViewEdit() {
+        if (chamadaEditVO.getSincronizado()){
+            btnSalvarChamada.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toaster.makeToast(ChamadaFormActivity.this, "A chamada já foi enviada para o servidor, e não pode ser alterada.");
+                }
+            });
+        }
         dataChamada = chamadaEditVO.getData();
         txtDataChamada.setText(DateUtils.getDateString(dataChamada));
         alunosListView.setAdapter(new ChamadaAlunoAdapter(

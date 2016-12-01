@@ -1,18 +1,19 @@
 package br.com.wilderossi.blupresence;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
 
+import br.com.wilderossi.blupresence.api.AlunosApi;
+import br.com.wilderossi.blupresence.components.LoaderDialog;
+import br.com.wilderossi.blupresence.components.Toaster;
+import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Aluno;
 import br.com.wilderossi.blupresence.transaction.Turma;
 import br.com.wilderossi.blupresence.transaction.services.AlunoService;
@@ -20,10 +21,7 @@ import br.com.wilderossi.blupresence.transaction.services.DatabaseServiceExcepti
 import br.com.wilderossi.blupresence.transaction.services.TurmaService;
 import br.com.wilderossi.blupresence.util.AlunoVOComparator;
 import br.com.wilderossi.blupresence.vo.AlunoVO;
-import br.com.wilderossi.blupresence.api.AlunosApi;
 import br.com.wilderossi.blupresence.vo.TurmaVO;
-import br.com.wilderossi.blupresence.components.LoaderDialog;
-import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 
 public class TurmaFormActivity extends BaseActivity {
 
@@ -107,12 +105,7 @@ public class TurmaFormActivity extends BaseActivity {
             alunoSqliteService.salvar(aluno);
         }
 
-        Context context = getApplicationContext();
-        CharSequence text = "Turma salva com sucesso!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        Toaster.makeToast(this, "Turma salva com sucesso!");
         this.finish();
     }
 }

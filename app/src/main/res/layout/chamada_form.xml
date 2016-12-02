@@ -98,7 +98,8 @@
             android:id="@+id/btnAbrirConexao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/abrir_conexao"/>
+            android:text="@string/abrir_conexao"
+            android:onClick="onClickAbrirConexao"/>
     </LinearLayout>
 
 

@@ -1,7 +1,12 @@
 package br.com.wilderossi.blupresence;
 
 import android.app.DialogFragment;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,12 +18,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
+import br.com.wilderossi.blupresence.components.BluetoothServer;
 import br.com.wilderossi.blupresence.components.ChamadaAlunoAdapter;
 import br.com.wilderossi.blupresence.components.DatePickerFragment;
 import br.com.wilderossi.blupresence.components.Toaster;
@@ -42,11 +50,16 @@ public class ChamadaFormActivity extends BaseActivity {
     private TextView txtDataChamada;
     private ListView alunosListView;
     private Button btnSalvarChamada;
+    private Button btnAbrirConexao;
+
+    private Boolean conexaoAberta;
 
     private Boolean editMode;
     private ChamadaEditVO chamadaEditVO;
 
     private ChamadaService serviceChamadaSQLite;
+
+    private BluetoothServer bluetoothServer;
 
     @Override
     public int getActivity() {
@@ -71,6 +84,8 @@ public class ChamadaFormActivity extends BaseActivity {
         txtDataChamada = (TextView) findViewById(R.id.dataChamada);
         alunosListView = (ListView) findViewById(R.id.listViewAlunosChamada);
         btnSalvarChamada = (Button) findViewById(R.id.btnSalvarChamada);
+        btnAbrirConexao = (Button) findViewById(R.id.btnAbrirConexao);
+        conexaoAberta = Boolean.FALSE;
 
         editMode = idChamada != -1L;
         if (editMode){
@@ -89,6 +104,7 @@ public class ChamadaFormActivity extends BaseActivity {
                     Toaster.makeToast(ChamadaFormActivity.this, "A chamada já foi enviada para o servidor, e não pode ser alterada.");
                 }
             });
+            btnAbrirConexao.setEnabled(Boolean.FALSE);
         }
         dataChamada = chamadaEditVO.getData();
         txtDataChamada.setText(DateUtils.getDateString(dataChamada));
@@ -187,5 +203,24 @@ public class ChamadaFormActivity extends BaseActivity {
         }
 
         Toaster.makeToast(getApplicationContext(), "Chamada salva com sucesso!");
+    }
+
+    public void onClickAbrirConexao(View view) throws IOException {
+        if (!conexaoAberta){
+            final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+            BluetoothAdapter mBluetoothAdapter = bluetoothManager.getAdapter();
+            if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, 1);
+                return;
+            }
+            btnAbrirConexao.setText("Fechar conexão");
+            bluetoothServer = new BluetoothServer(mBluetoothAdapter);
+            new Thread(bluetoothServer).start();
+        } else {
+            btnAbrirConexao.setText("Abrir conexão");
+            bluetoothServer.cancel();
+        }
+        conexaoAberta = !conexaoAberta;
     }
 }

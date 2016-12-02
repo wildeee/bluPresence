@@ -10,13 +10,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import br.com.wilderossi.blupresence.api.EnviarDadosApi;
-import br.com.wilderossi.blupresence.components.ChamadaDateComparator;
+import br.com.wilderossi.blupresence.util.ChamadaDateComparator;
 import br.com.wilderossi.blupresence.components.SubtitledArrayAdapter;
 import br.com.wilderossi.blupresence.components.Toaster;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;

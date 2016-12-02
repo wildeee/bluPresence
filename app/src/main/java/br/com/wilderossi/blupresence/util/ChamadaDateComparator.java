@@ -1,4 +1,4 @@
-package br.com.wilderossi.blupresence.components;
+package br.com.wilderossi.blupresence.util;
 
 import java.util.Comparator;
 

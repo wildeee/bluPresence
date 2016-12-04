@@ -134,6 +134,7 @@ public class ChamadaListActivity extends BaseActivity implements AdapterView.OnI
     }
 
     public void onClickNovaChamada(View view){
+        SingletonHelper.URL_INSTITUICAO = url;
         chamadaClicada = null;
         redirectTo(ChamadaFormActivity.class);
     }
@@ -169,6 +170,7 @@ public class ChamadaListActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        SingletonHelper.URL_INSTITUICAO = url;
         chamadaClicada = (Chamada) listViewChamada.getItemAtPosition(position);
         redirectTo(ChamadaFormActivity.class);
     }

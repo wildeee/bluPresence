@@ -1,6 +1,6 @@
 package br.com.wilderossi.blupresence.vo;
 
-public class LoginVO extends ApiVO {
+public class LoginVO {
 
     private String login;
     private String senha;

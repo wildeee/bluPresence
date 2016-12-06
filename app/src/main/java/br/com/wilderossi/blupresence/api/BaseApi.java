@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.wilderossi.blupresence.vo.ApiVO;
-
 public abstract class BaseApi<T> extends AsyncTask<Void, Void, T> implements ApiInterface {
 
     protected final String baseUrl;

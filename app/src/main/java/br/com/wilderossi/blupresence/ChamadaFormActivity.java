@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -210,12 +213,36 @@ public class ChamadaFormActivity extends BaseActivity {
             }
 
             btnAbrirConexao.setText("Fechar conexão");
-            bluetoothServer = new BluetoothServer(mBluetoothAdapter);
+            bluetoothServer = new BluetoothServer(mBluetoothAdapter, this);
             new Thread(bluetoothServer).start();
         } else {
             btnAbrirConexao.setText("Abrir conexão");
             bluetoothServer.cancel();
         }
         conexaoAberta = !conexaoAberta;
+    }
+
+    public void insereAluno(final String alunoServerId) {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                ListAdapter adapter = alunosListView.getAdapter();
+                List<AlunoPresencaVO> alunosPresenca = new ArrayList<>();
+                AlunoPresencaVO alunoPresencaVO;
+                for (int i = 0; i < adapter.getCount(); i++){
+                    alunoPresencaVO = (AlunoPresencaVO) adapter.getItem(i);
+                    if (alunoServerId.equals(alunoPresencaVO.getAluno().getServerId())){
+                        alunoPresencaVO.setPresente(Boolean.TRUE);
+                    }
+                    alunosPresenca.add(alunoPresencaVO);
+                }
+                ChamadaAlunoAdapter chamadaAdapter = new ChamadaAlunoAdapter(
+                        ChamadaFormActivity.this,
+                        R.layout.chamada_listadapter_layout,
+                        alunosPresenca
+                );
+                alunosListView.setAdapter(chamadaAdapter);
+                chamadaAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

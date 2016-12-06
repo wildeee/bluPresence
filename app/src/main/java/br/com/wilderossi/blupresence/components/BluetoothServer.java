@@ -6,14 +6,17 @@ import android.bluetooth.BluetoothSocket;
 
 import java.io.IOException;
 
+import br.com.wilderossi.blupresence.ChamadaFormActivity;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 
 public class BluetoothServer implements Runnable {
 
     private final BluetoothServerSocket serverSocket;
+    private final ChamadaFormActivity chamadaFormActivity;
 
-    public BluetoothServer(BluetoothAdapter mBluetoothAdapter) throws IOException {
+    public BluetoothServer(BluetoothAdapter mBluetoothAdapter, ChamadaFormActivity chamadaFormActivity) throws IOException {
         serverSocket = mBluetoothAdapter.listenUsingRfcommWithServiceRecord("bluPresence", SingletonHelper.APP_UUID);
+        this.chamadaFormActivity = chamadaFormActivity;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class BluetoothServer implements Runnable {
                 break;
             }
             if (socket != null) {
-                new Thread(new BluetoothRequestHandler(socket)).start();
+                new Thread(new BluetoothRequestHandler(socket, chamadaFormActivity)).start();
             }
         }
     }

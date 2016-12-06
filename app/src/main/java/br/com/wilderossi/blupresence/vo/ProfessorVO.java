@@ -1,8 +1,6 @@
 package br.com.wilderossi.blupresence.vo;
 
-import br.com.wilderossi.blupresence.vo.ApiVO;
-
-public class ProfessorVO extends ApiVO {
+public class ProfessorVO {
 
     private String id;
     private String login;

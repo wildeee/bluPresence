@@ -2,7 +2,7 @@ package br.com.wilderossi.blupresence.vo;
 
 import java.util.Calendar;
 
-public class TesteConexaoVO extends ApiVO {
+public class TesteConexaoVO {
 
     private String message;
     private Calendar date;

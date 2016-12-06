@@ -49,7 +49,7 @@ public class BluetoothRequestHandler implements Runnable {
                     return;
                 }
                 registraPresenca(alunoServerId);
-                output.write("Sucesso!".getBytes());
+                output.write("Chamada registrada com sucesso!".getBytes());
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package br.com.wilderossi.blupresence;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -209,8 +210,8 @@ public class ChamadaFormActivity extends BaseActivity {
             BluetoothAdapter mBluetoothAdapter = bluetoothManager.getAdapter();
             if (mBluetoothAdapter == null || mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
                 Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 3600);
-                startActivity(discoverableIntent);
+                discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, SingletonHelper.TEMPO_DE_CONEXAO_ABERTA);
+                startActivityForResult(discoverableIntent, 1);
                 return;
             }
 
@@ -223,6 +224,19 @@ public class ChamadaFormActivity extends BaseActivity {
             bluetoothServer.cancel();
         }
         conexaoAberta = !conexaoAberta;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1){
+            if (resultCode == SingletonHelper.TEMPO_DE_CONEXAO_ABERTA){
+                try {
+                    onClickAbrirConexao(null);
+                } catch (IOException e) {
+                    Log.e("onActivityResult", e.getMessage());
+                }
+            }
+        }
     }
 
     public void insereAluno(final String alunoServerId) {

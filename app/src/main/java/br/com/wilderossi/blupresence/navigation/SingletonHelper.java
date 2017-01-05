@@ -14,4 +14,5 @@ public class SingletonHelper {
     public static ChamadaListActivity chamadaListActivity;
     public static String URL_INSTITUICAO;
     public static final UUID APP_UUID = UUID.fromString("9c2907f9-7ab7-42a9-9130-41ba83ec64ec");
+    public static final Integer TEMPO_DE_CONEXAO_ABERTA = 3600;
 }

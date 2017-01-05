@@ -57,6 +57,8 @@ public class ChamadaFormActivity extends BaseActivity {
 
     private BluetoothServer bluetoothServer;
 
+    private String nomeTurma;
+
     @Override
     public int getActivity() {
         return R.layout.chamada_form;
@@ -73,7 +75,7 @@ public class ChamadaFormActivity extends BaseActivity {
         Long idChamada = getLongExtra(savedInstanceState, ChamadaListActivity.CHAMADA_CLICADA);
         serviceChamadaSQLite = new ChamadaService(this);
 
-        String nomeTurma = getStringExtra(savedInstanceState, ChamadaListActivity.NOME_TURMA_PARAM);
+        nomeTurma = getStringExtra(savedInstanceState, ChamadaListActivity.NOME_TURMA_PARAM);
         TextView txtChamadaTurma = (TextView) findViewById(R.id.txtChamadaTurma);
         txtChamadaTurma.setText(nomeTurma);
 
@@ -213,6 +215,7 @@ public class ChamadaFormActivity extends BaseActivity {
             }
 
             btnAbrirConexao.setText("Fechar conexão");
+            mBluetoothAdapter.setName(nomeTurma);
             bluetoothServer = new BluetoothServer(mBluetoothAdapter, this);
             new Thread(bluetoothServer).start();
         } else {

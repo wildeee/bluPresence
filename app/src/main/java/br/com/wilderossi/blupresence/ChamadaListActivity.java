@@ -14,13 +14,13 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.wilderossi.blupresence.api.EnviarDadosApi;
-import br.com.wilderossi.blupresence.util.ChamadaDateComparator;
 import br.com.wilderossi.blupresence.components.SubtitledArrayAdapter;
 import br.com.wilderossi.blupresence.components.Toaster;
 import br.com.wilderossi.blupresence.navigation.SingletonHelper;
 import br.com.wilderossi.blupresence.transaction.Chamada;
 import br.com.wilderossi.blupresence.transaction.services.AlunoPresencaService;
 import br.com.wilderossi.blupresence.transaction.services.ChamadaService;
+import br.com.wilderossi.blupresence.util.ChamadaDateComparator;
 import br.com.wilderossi.blupresence.util.DateUtils;
 import br.com.wilderossi.blupresence.vo.EnviarDadosErroVO;
 import br.com.wilderossi.blupresence.vo.EnviarDadosVO;
